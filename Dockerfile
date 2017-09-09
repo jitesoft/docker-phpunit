@@ -1,12 +1,13 @@
-FROM jite/composer:latest
-MAINTAINER Johannes Tegnér <johannes@jitesoft.com>
+FROM jitesoft/composer:latest
+LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>"
 
-ENV PHPUNITVERSION ^6.0
+ENV PHPUNITVERSION="^6.3"
 
-RUN composer selfupdate && \
-    composer global require "phpunit/phpunit: $PHPUNITVERSION" --prefer-source --no-interaction
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && composer selfupdate \
+    && composer global require "phpunit/phpunit: ${PHPUNITVERSION}" --prefer-source --no-interaction
 
-VOLUME ["/app"]
 WORKDIR /app
 
 ENTRYPOINT ["phpunit"]
