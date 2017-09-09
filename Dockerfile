@@ -1,8 +1,7 @@
 FROM jitesoft/composer:latest
 LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>"
 
-# Version 6.3 or above.
-ENV PHPUNITVERSION="^6.3"
+ENV PHPUNITVERSION="^5.7"
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug \
