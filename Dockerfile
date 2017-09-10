@@ -1,4 +1,4 @@
-FROM jitesoft/composer:latest
+FROM jitesoft/composer:php-7.2
 LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>"
 
 ENV PHPUNITVERSION="^6.3"
