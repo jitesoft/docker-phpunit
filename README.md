@@ -4,7 +4,7 @@ Image includes php (fpm), [composer](https://getcomposer.org/), [xdebug](https:/
 
 ## Tags
 
-* `6.5`, `6.5-php-7.2`, `latest` - [6.5/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.2/Dockerfile)
+* `6.5`, `6.5-php-7.2`, `latest` - [6.5/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.2/Dockerfile) (uses xdebug `2.6.0alpha1`)
 * `6.5-php-7.1` - [6.5/7.1/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.1/Dockerfile)
 * `6.5-php-7.0` - [6.5/7.0/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.0/Dockerfile)
 * `5.7`, `5.7-php-7.1` - [5.7/7.1/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/5.7/7.1/Dockerfile)
