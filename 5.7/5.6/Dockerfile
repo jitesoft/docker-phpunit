@@ -1,7 +1,9 @@
-FROM jitesoft/composer:latest
+FROM jitesoft/composer:php-5.6
 LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>"
+LABEL php_version="5.6"
+LABEL phpunit_version="5.7"
 
-ENV PHPUNITVERSION="^6.3"
+ENV PHPUNITVERSION="^5.7"
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug \
