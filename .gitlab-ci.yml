@@ -15,7 +15,7 @@ Php 7.2 Phpunit 6.5:
     - PHP_UNIT_SHORT="${UNIT_V:0:1}"
     - PHP_SHORT="${PHP_V:0:2}"
     - docker login -u $HUB_USER -p $HUB_PW
-    - TAGS="${PHP_SHORT} ${UNIT_V} ${PHP_UNIT_SHORT} 7 7-${PHP_UNIT_SHORT} ${PHP_SHORT}-${PHP_UNIT_SHORT} stable latest"
+    - TAGS="${PHP_SHORT} ${UNIT_V} 7 7-${UNIT_V} ${PHP_SHORT}-${UNIT_V} stable latest"
     - for tag in $TAGS; do docker tag $BUILD ${IMG_NAME}:${tag}; docker push ${IMG_NAME}:${tag}; done
     - docker logout
   only:
