@@ -4,7 +4,7 @@ LABEL php_version="7.2"
 LABEL phpunit_version="6.5"
 
 ENV PHPUNITVERSION="^6.5" \
-    XDEBUGVERSION="2.6.0alpha1"
+    XDEBUGVERSION="2.6.0beta1"
 
 # There is no stable xdebug release for php 7.2 yet, so it has to be installed from source.
 
