@@ -22,5 +22,4 @@ RUN curl -sS https://xdebug.org/files/xdebug-${XDEBUGVERSION}.tgz | tar -xz -C /
 
 WORKDIR /app
 
-ENTRYPOINT ["phpunit"]
-CMD ["--help"]
+CMD ["phpunit"]

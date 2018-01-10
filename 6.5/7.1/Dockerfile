@@ -13,5 +13,4 @@ RUN pecl install xdebug \
 
 WORKDIR /app
 
-ENTRYPOINT ["phpunit"]
-CMD ["--help"]
+CMD ["phpunit"]
