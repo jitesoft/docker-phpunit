@@ -8,6 +8,9 @@ variables:
 before_script:
   - docker login -u $HUB_USER -p $HUB_PW
 after_script:
+  - docker run --rm ${IMG_NAME}:${VERSION} phpunit --version
+  - docker run --rm ${IMG_NAME}:${VERSION} composer -V
+  - docker run --rm ${IMG_NAME}:${VERSION} php -v
   - docker logout
 
 Php 7.2 Phpunit 6.5:
@@ -16,7 +19,7 @@ Php 7.2 Phpunit 6.5:
     DOCKER_FILE: "${UNIT_VERSION}/${PHP_VERSION}/Dockerfile"
   script:
     - docker pull jitesoft/composer:php-${PHP_VERSION}
-    - BUILD=$(docker build -q -f ${DOCKER_FILE} .)
+    - BUILD=$(docker build --no-cache -q -f ${DOCKER_FILE} .)
     - PHP_V=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{if eq (index (split $value "=") 0) "PHP_VERSION" }}{{range $i, $part := (split $value "=")}}{{if gt $i 1}}{{print "="}}{{end}}{{if gt $i 0}}{{print $part}}{{end}}{{end}}{{end}}{{end}}' ${BUILD})
     - echo "Building for php v ${PHP_V} with Php unit ${UNIT_VERSION}. The image build hash is ${BUILD}"
     - PHP_UNIT_SHORT="${UNIT_VERSION:0:1}"
@@ -32,7 +35,7 @@ Php 7.1 Phpunit 6.5:
     DOCKER_FILE: "${UNIT_VERSION}/${PHP_VERSION}/Dockerfile"
   script:
     - docker pull jitesoft/composer:php-${PHP_VERSION}
-    - BUILD=$(docker build -q -f ${DOCKER_FILE} .)
+    - BUILD=$(docker build --no-cache -q -f ${DOCKER_FILE} .)
     - PHP_V=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{if eq (index (split $value "=") 0) "PHP_VERSION" }}{{range $i, $part := (split $value "=")}}{{if gt $i 1}}{{print "="}}{{end}}{{if gt $i 0}}{{print $part}}{{end}}{{end}}{{end}}{{end}}' ${BUILD})
     - echo "Building for php v ${PHP_V} with Php unit ${UNIT_VERSION}. The image build hash is ${BUILD}"
     - PHP_UNIT_SHORT="${UNIT_VERSION:0:1}"
@@ -49,7 +52,7 @@ Php 7.0 Phpunit 6.5:
     DOCKER_FILE: "${UNIT_VERSION}/${PHP_VERSION}/Dockerfile"
   script:
     - docker pull jitesoft/composer:php-${PHP_VERSION}
-    - BUILD=$(docker build -q -f ${DOCKER_FILE} .)
+    - BUILD=$(docker build --no-cache -q -f ${DOCKER_FILE} .)
     - PHP_V=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{if eq (index (split $value "=") 0) "PHP_VERSION" }}{{range $i, $part := (split $value "=")}}{{if gt $i 1}}{{print "="}}{{end}}{{if gt $i 0}}{{print $part}}{{end}}{{end}}{{end}}{{end}}' ${BUILD})
     - UNIT_VERSION=6.5
     - echo "Building for php v ${PHP_V} with Php unit ${UNIT_VERSION}. The image build hash is ${BUILD}"
@@ -67,7 +70,7 @@ Php 7.1 Phpunit 5.7:
     DOCKER_FILE: "${UNIT_VERSION}/${PHP_VERSION}/Dockerfile"
   script:
     - docker pull jitesoft/composer:php-${PHP_VERSION}
-    - BUILD=$(docker build -q -f ${DOCKER_FILE} .)
+    - BUILD=$(docker build --no-cache -q -f ${DOCKER_FILE} .)
     - PHP_V=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{if eq (index (split $value "=") 0) "PHP_VERSION" }}{{range $i, $part := (split $value "=")}}{{if gt $i 1}}{{print "="}}{{end}}{{if gt $i 0}}{{print $part}}{{end}}{{end}}{{end}}{{end}}' ${BUILD})
     - echo "Building for php v ${PHP_V} with Php unit ${UNIT_VERSION}. The image build hash is ${BUILD}"
     - TAGS="${PHP_VERSION}-${UNIT_VERSION}"
@@ -83,7 +86,7 @@ Php 7.0 Phpunit 5.7:
     DOCKER_FILE: "${UNIT_VERSION}/${PHP_VERSION}/Dockerfile"
   script:
     - docker pull jitesoft/composer:php-${PHP_VERSION}
-    - BUILD=$(docker build -q -f ${DOCKER_FILE} .)
+    - BUILD=$(docker build --no-cache -q -f ${DOCKER_FILE} .)
     - PHP_V=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{if eq (index (split $value "=") 0) "PHP_VERSION" }}{{range $i, $part := (split $value "=")}}{{if gt $i 1}}{{print "="}}{{end}}{{if gt $i 0}}{{print $part}}{{end}}{{end}}{{end}}{{end}}' ${BUILD})
     - echo "Building for php v ${PHP_V} with Php unit ${UNIT_VERSION}. The image build hash is ${BUILD}"
     - TAGS="${PHP_VERSION}-${UNIT_VERSION}"
@@ -99,7 +102,7 @@ Php 5.6 Phpunit 5.7:
     DOCKER_FILE: "${UNIT_VERSION}/${PHP_VERSION}/Dockerfile"
   script:
     - docker pull jitesoft/composer:php-${PHP_VERSION}
-    - BUILD=$(docker build -q -f ${DOCKER_FILE} .)
+    - BUILD=$(docker build --no-cache -q -f ${DOCKER_FILE} .)
     - PHP_V=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{if eq (index (split $value "=") 0) "PHP_VERSION" }}{{range $i, $part := (split $value "=")}}{{if gt $i 1}}{{print "="}}{{end}}{{if gt $i 0}}{{print $part}}{{end}}{{end}}{{end}}{{end}}' ${BUILD})
     - echo "Building for php v ${PHP_V} with Php unit ${UNIT_VERSION}. The image build hash is ${BUILD}"
     - TAGS="${PHP_VERSION} ${PHP_VERSION}-${UNIT_VERSION} 5"
