@@ -2,108 +2,107 @@ image: docker:latest
 
 variables:
   IMG_NAME: "jitesoft/phpunit"
+  UNIT_VERSION: "6.5"
+  PHP_VERSION: "7.2"
+
+before_script:
+  - docker login -u $HUB_USER -p $HUB_PW
+after_script:
+  - docker logout
 
 Php 7.2 Phpunit 6.5:
   stage: deploy
   variables:
-    DOCKER_FILE: "6.5/7.2/Dockerfile"
+    DOCKER_FILE: "${UNIT_VERSION}/${PHP_VERSION}/Dockerfile"
   script:
+    - docker pull jitesoft/composer:php-${PHP_VERSION}
     - BUILD=$(docker build -q -f ${DOCKER_FILE} .)
     - PHP_V=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{if eq (index (split $value "=") 0) "PHP_VERSION" }}{{range $i, $part := (split $value "=")}}{{if gt $i 1}}{{print "="}}{{end}}{{if gt $i 0}}{{print $part}}{{end}}{{end}}{{end}}{{end}}' ${BUILD})
-    - UNIT_V=6.5
-    - echo "Building for php v ${PHP_V} with Php unit ${UNIT_V}. The image build hash is ${BUILD}"
-    - PHP_UNIT_SHORT="${UNIT_V:0:1}"
-    - PHP_SHORT="${PHP_V:0:3}"
-    - docker login -u $HUB_USER -p $HUB_PW
-    - TAGS="${PHP_SHORT} ${UNIT_V} 7 7-${UNIT_V} ${PHP_SHORT}-${UNIT_V} stable latest"
+    - echo "Building for php v ${PHP_V} with Php unit ${UNIT_VERSION}. The image build hash is ${BUILD}"
+    - PHP_UNIT_SHORT="${UNIT_VERSION:0:1}"
+    - TAGS="${PHP_VERSION} ${UNIT_VERSION} ${PHP_VERSION}-${PHP_UNIT_SHORT} 7-${PHP_UNIT_SHORT} 7 7-${UNIT_VERSION} ${PHP_VERSION}-${UNIT_VERSION} stable latest"
     - for tag in $TAGS; do docker tag $BUILD ${IMG_NAME}:${tag}; docker push ${IMG_NAME}:${tag}; done
-    - docker logout
   only:
     - master
 
 Php 7.1 Phpunit 6.5:
   stage: deploy
   variables:
-    DOCKER_FILE: "6.5/7.1/Dockerfile"
+    PHP_VERSION: "7.1"
+    DOCKER_FILE: "${UNIT_VERSION}/${PHP_VERSION}/Dockerfile"
   script:
+    - docker pull jitesoft/composer:php-${PHP_VERSION}
     - BUILD=$(docker build -q -f ${DOCKER_FILE} .)
     - PHP_V=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{if eq (index (split $value "=") 0) "PHP_VERSION" }}{{range $i, $part := (split $value "=")}}{{if gt $i 1}}{{print "="}}{{end}}{{if gt $i 0}}{{print $part}}{{end}}{{end}}{{end}}{{end}}' ${BUILD})
-    - UNIT_V=6.5
-    - echo "Building for php v ${PHP_V} with Php unit ${UNIT_V}. The image build hash is ${BUILD}"
-    - PHP_UNIT_SHORT="${UNIT_V:0:1}"
-    - PHP_SHORT="${PHP_V:0:3}"
-    - docker login -u $HUB_USER -p $HUB_PW
-    - TAGS="${PHP_SHORT} ${PHP_SHORT}-${PHP_UNIT_SHORT} ${PHP_SHORT}-${UNIT_V}"
+    - echo "Building for php v ${PHP_V} with Php unit ${UNIT_VERSION}. The image build hash is ${BUILD}"
+    - PHP_UNIT_SHORT="${UNIT_VERSION:0:1}"
+    - TAGS="${PHP_VERSION} ${PHP_VERSION}-${PHP_UNIT_SHORT} ${PHP_VERSION}-${UNIT_VERSION}"
     - for tag in $TAGS; do docker tag $BUILD ${IMG_NAME}:${tag}; docker push ${IMG_NAME}:${tag}; done
-    - docker logout
   only:
     - master
 
 Php 7.0 Phpunit 6.5:
   stage: deploy
   variables:
-    DOCKER_FILE: "6.5/7.0/Dockerfile"
+    UNIT_VERSION: "6.5"
+    PHP_VERSION: "7.0"
+    DOCKER_FILE: "${UNIT_VERSION}/${PHP_VERSION}/Dockerfile"
   script:
+    - docker pull jitesoft/composer:php-${PHP_VERSION}
     - BUILD=$(docker build -q -f ${DOCKER_FILE} .)
     - PHP_V=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{if eq (index (split $value "=") 0) "PHP_VERSION" }}{{range $i, $part := (split $value "=")}}{{if gt $i 1}}{{print "="}}{{end}}{{if gt $i 0}}{{print $part}}{{end}}{{end}}{{end}}{{end}}' ${BUILD})
-    - UNIT_V=6.5
-    - echo "Building for php v ${PHP_V} with Php unit ${UNIT_V}. The image build hash is ${BUILD}"
-    - PHP_UNIT_SHORT="${UNIT_V:0:1}"
-    - PHP_SHORT="${PHP_V:0:3}"
-    - docker login -u $HUB_USER -p $HUB_PW
-    - TAGS="${PHP_SHORT} ${PHP_SHORT}-${PHP_UNIT_SHORT} ${PHP_SHORT}-${UNIT_V}"
+    - UNIT_VERSION=6.5
+    - echo "Building for php v ${PHP_V} with Php unit ${UNIT_VERSION}. The image build hash is ${BUILD}"
+    - PHP_UNIT_SHORT="${UNIT_VERSION:0:1}"
+    - TAGS="${PHP_VERSION} ${PHP_VERSION}-${PHP_UNIT_SHORT} ${PHP_VERSION}-${UNIT_VERSION}"
     - for tag in $TAGS; do docker tag $BUILD ${IMG_NAME}:${tag}; docker push ${IMG_NAME}:${tag}; done
-    - docker logout
   only:
     - master
 
 Php 7.1 Phpunit 5.7:
   stage: deploy
   variables:
-    DOCKER_FILE: "5.7/7.1/Dockerfile"
+    UNIT_VERSION: "5.7"
+    PHP_VERSION: "7.1"
+    DOCKER_FILE: "${UNIT_VERSION}/${PHP_VERSION}/Dockerfile"
   script:
+    - docker pull jitesoft/composer:php-${PHP_VERSION}
     - BUILD=$(docker build -q -f ${DOCKER_FILE} .)
     - PHP_V=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{if eq (index (split $value "=") 0) "PHP_VERSION" }}{{range $i, $part := (split $value "=")}}{{if gt $i 1}}{{print "="}}{{end}}{{if gt $i 0}}{{print $part}}{{end}}{{end}}{{end}}{{end}}' ${BUILD})
-    - UNIT_V=5.7
-    - echo "Building for php v ${PHP_V} with Php unit ${UNIT_V}. The image build hash is ${BUILD}"
-    - docker login -u $HUB_USER -p $HUB_PW
-    - PHP_SHORT="${PHP_V:0:3}"
-    - TAGS="${PHP_SHORT}-${UNIT_V}"
+    - echo "Building for php v ${PHP_V} with Php unit ${UNIT_VERSION}. The image build hash is ${BUILD}"
+    - TAGS="${PHP_VERSION}-${UNIT_VERSION}"
     - for tag in $TAGS; do docker tag $BUILD ${IMG_NAME}:${tag}; docker push ${IMG_NAME}:${tag}; done
-    - docker logout
   only:
     - master
 
 Php 7.0 Phpunit 5.7:
   stage: deploy
   variables:
-    DOCKER_FILE: "5.7/7.0/Dockerfile"
+    UNIT_VERSION: "5.7"
+    PHP_VERSION: "7.0"
+    DOCKER_FILE: "${UNIT_VERSION}/${PHP_VERSION}/Dockerfile"
   script:
+    - docker pull jitesoft/composer:php-${PHP_VERSION}
     - BUILD=$(docker build -q -f ${DOCKER_FILE} .)
     - PHP_V=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{if eq (index (split $value "=") 0) "PHP_VERSION" }}{{range $i, $part := (split $value "=")}}{{if gt $i 1}}{{print "="}}{{end}}{{if gt $i 0}}{{print $part}}{{end}}{{end}}{{end}}{{end}}' ${BUILD})
-    - UNIT_V=5.7
-    - echo "Building for php v ${PHP_V} with Php unit ${UNIT_V}. The image build hash is ${BUILD}"
-    - PHP_SHORT="${PHP_V:0:3}"
-    - docker login -u $HUB_USER -p $HUB_PW
-    - TAGS="${PHP_SHORT}-${UNIT_V}"
+    - echo "Building for php v ${PHP_V} with Php unit ${UNIT_VERSION}. The image build hash is ${BUILD}"
+    - TAGS="${PHP_VERSION}-${UNIT_VERSION}"
     - for tag in $TAGS; do docker tag $BUILD ${IMG_NAME}:${tag}; docker push ${IMG_NAME}:${tag}; done
-    - docker logout
   only:
     - master
 
 Php 5.6 Phpunit 5.7:
   stage: deploy
   variables:
-    DOCKER_FILE: "5.7/5.6/Dockerfile"
+    UNIT_VERSION: "5.7"
+    PHP_VERSION: "5.6"
+    DOCKER_FILE: "${UNIT_VERSION}/${PHP_VERSION}/Dockerfile"
   script:
+    - docker pull jitesoft/composer:php-${PHP_VERSION}
     - BUILD=$(docker build -q -f ${DOCKER_FILE} .)
     - PHP_V=$(docker inspect -f '{{range $index, $value := .Config.Env}}{{if eq (index (split $value "=") 0) "PHP_VERSION" }}{{range $i, $part := (split $value "=")}}{{if gt $i 1}}{{print "="}}{{end}}{{if gt $i 0}}{{print $part}}{{end}}{{end}}{{end}}{{end}}' ${BUILD})
-    - UNIT_V=5.7
-    - echo "Building for php v ${PHP_V} with Php unit ${UNIT_V}. The image build hash is ${BUILD}"
-    - PHP_SHORT="${PHP_V:0:3}"
-    - docker login -u $HUB_USER -p $HUB_PW
-    - TAGS="${PHP_SHORT} ${PHP_SHORT}-${UNIT_V} 5"
+    - echo "Building for php v ${PHP_V} with Php unit ${UNIT_VERSION}. The image build hash is ${BUILD}"
+    - TAGS="${PHP_VERSION} ${PHP_VERSION}-${UNIT_VERSION} 5"
     - for tag in $TAGS; do docker tag $BUILD ${IMG_NAME}:${tag}; docker push ${IMG_NAME}:${tag}; done
-    - docker logout
   only:
     - master
