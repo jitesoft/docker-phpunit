@@ -10,7 +10,6 @@ Using `latest` or `stable` should make sure that php unit and php is as up to da
 
 * `7`, `7-7`, `7.2-7` `7.2-7.0`, `stable`, `latest` - [7.0/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/7.0/7.2/Dockerfile)
 * `7.1-7`, `7.1-7.0` - [7.0/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/7.0/7.1/Dockerfile)
-* `7.0-7`, `7.0-7.0` - [7.0/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/7.0/7.0/Dockerfile)
 * `7.2-6`, `7.2-6.5` - [6.5/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.2/Dockerfile)
 * `7.1-6`, `7.1-6.5` - [6.5/7.1/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.1/Dockerfile)
 * `7.0-6`, `7.0-6.5` - [6.5/7.0/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.0/Dockerfile)
