@@ -2,6 +2,7 @@ FROM jitesoft/composer:php-7.0
 LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>"
 LABEL php_version="7.0"
 LABEL phpunit_version="6.5"
+LABEL xdebug_version="2.6"
 
 ENV PHPUNITVERSION="^6.5"
 

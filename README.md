@@ -7,12 +7,19 @@ Image includes php (fpm), [composer](https://getcomposer.org/), [xdebug](https:/
 Tags are formatted with `php_version-php_unit_version`. Some of the tags only use the php version and the latest stable also use the php unit version as a single tag.  
 Using `latest` or `stable` should make sure that php unit and php is as up to date as possible.
 
-* `6.5`, `7.2`, `7`, `7-6.5`, `7.2-6.5`, `stable`, `latest` - [6.5/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.2/Dockerfile)
-* `7.1`, `7.1-6`, `7.1-6.5` - [6.5/7.1/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.1/Dockerfile)
-* `7.0`, `7.0-6`, `7.0-6.5` - [6.5/7.0/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.0/Dockerfile)
-* `7.1-5.7` - [5.7/7.1/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/5.7/7.1/Dockerfile)
-* `7.0-5.7` - [5.7/7.0/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/5.7/7.0/Dockerfile)
-* `5.6-5.7`, `5` - [5.7/5.6/Dockerfile](https:/github.com/jitesoft/docker-phpunit/blob/master/5.7/5.6/Dockerfile)
+
+* `7`, `7-7`, `7.2-7` `7.2-7.0`, `stable`, `latest` - [7.0/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/7.0/7.2/Dockerfile)
+* `7.1-7`, `7.1-7.0` - [7.0/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/7.0/7.1/Dockerfile)
+* `7.0-7`, `7.0-7.0` - [7.0/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/7.0/7.0/Dockerfile)
+* `7.2-6`, `7.2-6.5` - [6.5/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.2/Dockerfile)
+* `7.1-6`, `7.1-6.5` - [6.5/7.1/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.1/Dockerfile)
+* `7.0-6`, `7.0-6.5` - [6.5/7.0/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.0/Dockerfile)
+* `7.1-5`, `7.1-5.7` - [5.7/7.1/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/5.7/7.1/Dockerfile)
+* `7.0-5`, `7.0-5.7` - [5.7/7.0/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/5.7/7.0/Dockerfile)
+
+## Deprecated tags
+
+* `5.6-5.7`, `5` - [5.7/5.6/Dockerfile](https:/github.com/jitesoft/docker-phpunit/blob/master/5.7/5.6/Dockerfile) - No longer supported.
 
 ## Usage
 
