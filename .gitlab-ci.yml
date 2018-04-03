@@ -4,12 +4,11 @@ variables:
   IMG_NAME: "jitesoft/phpunit"
 
 before_script:
-  - docker login -u $HUB_USER -p $HUB_PW
+  - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
 after_script:
   - docker run --rm ${IMG_NAME}:${PHP_VERSION} phpunit --version
   - docker run --rm ${IMG_NAME}:${PHP_VERSION} composer -V
   - docker run --rm ${IMG_NAME}:${PHP_VERSION} php -v
-  - docker logout
 
 Php 7.2 Phpunit 7.0:
   stage: deploy
