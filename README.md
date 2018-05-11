@@ -4,17 +4,16 @@ Image includes php (fpm), [composer](https://getcomposer.org/), [xdebug](https:/
 
 ## Tags
 
-* `7`, `7-7`, `7.2-7` `7.2-7.0`, `stable`, `latest` - [7.0/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/7.0/7.2/Dockerfile)
-* `7.1-7`, `7.1-7.0` - [7.0/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/7.0/7.1/Dockerfile)
-* `7.2-6`, `7.2-6.5` - [6.5/7.2/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.2/Dockerfile)
-* `7.1-6`, `7.1-6.5` - [6.5/7.1/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.1/Dockerfile)
-* `7.0-6`, `7.0-6.5` - [6.5/7.0/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/6.5/7.0/Dockerfile)
-* `7.1-5`, `7.1-5.7` - [5.7/7.1/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/5.7/7.1/Dockerfile)
-* `7.0-5`, `7.0-5.7` - [5.7/7.0/Dockerfile](https://github.com/jitesoft/docker-phpunit/blob/master/5.7/7.0/Dockerfile)
+Each version has a base tag of <php-version>-<php-unit-version> where php version is major and minor version (I.E., 7.2, 7.1 etc) and phpunit is the major version (I.E., 7, 6 etc).  
+The `latest` and `stable` images are using the latest version of php and phpunit, all includes composer and xdebug.
 
-## Deprecated tags
+* `7.2-7`, `stable`, `latest`
+* `7.1-7`
+* `7.2-6`
+* `7.1-6`
+* `7.0-6`
 
-* `5.6-5.7`, `5` - [5.7/5.6/Dockerfile](https:/github.com/jitesoft/docker-phpunit/blob/master/5.7/5.6/Dockerfile) - No longer supported.
+All tags are based on the same image which can be found [here](https://github.com/jitesoft/docker-phpunit/blob/master/Dockerfile)
 
 ## Usage
 
