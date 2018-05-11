@@ -8,7 +8,7 @@ ENV PHP_VERSION="${PHP_VERSION}" \
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug \
-    && composer global require "phpunit/phpunit:${UNIT_VERSION}" --prefer-source --no-interaction \
+    && composer global require "phpunit/phpunit:${UNIT_VERSION}" --prefer-source --no-interaction
 
 WORKDIR /app
 
