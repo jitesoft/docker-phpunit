@@ -8,12 +8,12 @@
   script:
     - docker pull jitesoft/composer:${PHP_VERSION}
     - BUILD=$(docker build --build-arg PHP_VERSION=${PHP_VERSION} --build-arg UNIT_VERSION=${UNIT_VERSION} --no-cache -q -f Dockerfile .)
-    - TAGS="${PHP_VERSION}-${UNIT_VERSION:0:1} ${EXTRA_TAGS}"
+    - TAGS="${PHP_VERSION}-${UNIT_VERSION:1:2} ${EXTRA_TAGS}"
     - for tag in ${TAGS}; do docker tag ${BUILD} jitesoft/phpunit:${tag}; docker push jitesoft/phpunit:${tag}; done
   after_script:
-    - docker run --rm jitesoft/phpunit:${PHP_VERSION}-${UNIT_VERSION:0:1} phpunit --version
-    - docker run --rm jitesoft/phpunit:${PHP_VERSION}-${UNIT_VERSION:0:1} composer -V
-    - docker run --rm jitesoft/phpunit:${PHP_VERSION}-${UNIT_VERSION:0:1} php -v
+    - docker run --rm jitesoft/phpunit:${PHP_VERSION}-${UNIT_VERSION:1:2} phpunit --version
+    - docker run --rm jitesoft/phpunit:${PHP_VERSION}-${UNIT_VERSION:1:2} composer -V
+    - docker run --rm jitesoft/phpunit:${PHP_VERSION}-${UNIT_VERSION:1:2} php -v
 
 build:7.2:7:
     <<: *build-def
