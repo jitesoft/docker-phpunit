@@ -6,9 +6,11 @@ LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>"
 ENV PHP_VERSION="${PHP_VERSION}" \
     UNIT_VERSION="${UNIT_VERSION}"
 
-RUN pecl install xdebug \
+RUN apk add --no-cache --virtual .build-deps make libc-dev gcc autoconf \
+    && pecl install xdebug \
     && docker-php-ext-enable xdebug \
-    && composer global require "phpunit/phpunit ${UNIT_VERSION}" --prefer-source --no-interaction
+    && composer global require "phpunit/phpunit ${UNIT_VERSION}" --prefer-source --no-interaction \
+    && apk del .build-deps
 
 WORKDIR /app
 
