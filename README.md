@@ -7,6 +7,7 @@ Image includes php (fpm), [composer](https://getcomposer.org/), [xdebug](https:/
 Each version has a base tag of <php-version>-<php-unit-version> where php version is major and minor version (I.E., 7.2, 7.1 etc) and phpunit is the major version (I.E., 7, 6 etc).  
 The `latest` and `stable` images are using the latest version of php and phpunit, all includes composer and xdebug.
 
+* `7.3-7`, `next`, `rc`, `unstable`
 * `7.2-7`, `stable`, `latest`
 * `7.1-7`
 * `7.2-6`

@@ -15,6 +15,13 @@
     - docker run --rm jitesoft/phpunit:${PHP_VERSION}-${UNIT_VERSION:1:2} composer -V
     - docker run --rm jitesoft/phpunit:${PHP_VERSION}-${UNIT_VERSION:1:2} php -v
 
+build:7.3:7:
+  <<: *build-def
+  variables:
+    EXTRA_TAGS: "next rc unstable"
+    PHP_VERSION: "7.3-rc"
+    UNIT_VERSION: "^7"
+
 build:7.2:7:
     <<: *build-def
     variables:
