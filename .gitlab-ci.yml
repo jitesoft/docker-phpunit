@@ -18,14 +18,13 @@
 build:7.3:7:
   <<: *build-def
   variables:
-    EXTRA_TAGS: "next rc unstable"
-    PHP_VERSION: "7.3-rc"
+    EXTRA_TAGS: "latest stable"
+    PHP_VERSION: "7.3"
     UNIT_VERSION: "^7"
 
 build:7.2:7:
     <<: *build-def
     variables:
-      EXTRA_TAGS: "latest stable"
       PHP_VERSION: "7.2"
       UNIT_VERSION: "^7"
 
