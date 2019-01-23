@@ -1,6 +1,8 @@
 .build: &build-def
   stage: deploy
   image: docker:latest
+  services:
+    - docker:dind
   variables:
     EXTRA_TAGS: ""
   before_script:
