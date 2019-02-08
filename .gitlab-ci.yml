@@ -9,9 +9,9 @@
     - echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USER} --password-stdin
   script:
     - docker pull jitesoft/composer:${PHP_VERSION}
-    - BUILD=$(docker build --build-arg PHP_VERSION=${PHP_VERSION} --build-arg UNIT_VERSION=${UNIT_VERSION} --no-cache -q -f Dockerfile .)
+    - docker build --build-arg PHP_VERSION=${PHP_VERSION} --build-arg UNIT_VERSION=${UNIT_VERSION} -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --no-cache -f Dockerfile .
     - TAGS="${PHP_VERSION}-${UNIT_VERSION:1:2} ${EXTRA_TAGS}"
-    - for tag in ${TAGS}; do docker tag ${BUILD} jitesoft/phpunit:${tag}; docker push jitesoft/phpunit:${tag}; done
+    - for tag in ${TAGS}; do docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} jitesoft/phpunit:${tag}; docker push jitesoft/phpunit:${tag}; done
   after_script:
     - docker run --rm jitesoft/phpunit:${PHP_VERSION}-${UNIT_VERSION:1:2} phpunit --version
     - docker run --rm jitesoft/phpunit:${PHP_VERSION}-${UNIT_VERSION:1:2} composer -V
