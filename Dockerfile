@@ -1,5 +1,5 @@
 ARG PHP_VERSION='7.3'
-FROM registry.gitlab.com/jitesoft/dockerfiles/composer/cli:${PHP_VERSION}
+FROM registry.gitlab.com/jitesoft/dockerfiles/composer-alpine/cli:${PHP_VERSION}
 LABEL com.jitesoft.project.repo.type="git" \
       com.jitesoft.project.repo.uri="https://gitlab.com/jitesoft/dockerfiles/phpunit" \
       com.jitesoft.project.repo.issues="https://gitlab.com/jitesoft/dockerfiles/phpunit/issues" \
