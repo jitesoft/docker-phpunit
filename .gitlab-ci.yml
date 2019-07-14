@@ -1,54 +1,116 @@
+include:
+  - https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/container_scan.yml
+
+stages:
+  - download
+  - deploy
+  - scan
+
+.download: &download-def
+  stage: download
+  image: registry.gitlab.com/jitesoft/dockerfiles/alpine:latest
+  variables:
+    VERSION: ""
+  before_script:
+    - apk add --no-cache gnupg
+  script:
+    - wget -qO- https://sebastian-bergmann.de/gpg.asc | gpg --import
+    - wget https://phar.phpunit.de/phpunit-${VERSION}.phar
+    - wget https://phar.phpunit.de/phpunit-${VERSION}.phar.asc
+    - gpg phpunit-${VERSION}.phar.asc
+    - mv phpunit-${VERSION}.phar phpunit.phar
+  artifacts:
+    paths:
+      - phpunit.phar
+    expire_in: 5 days
+
+download:8:
+  <<: *download-def
+  variables:
+    VERSION: 8
+
+download:7:
+  <<: *download-def
+  variables:
+    VERSION: 7
+
 .build: &build-def
   stage: deploy
-  image: docker:latest
+  image: registry.gitlab.com/jitesoft/dockerfiles/docker:18.09.6
   services:
-    - docker:dind
+    - registry.gitlab.com/jitesoft/dockerfiles/docker/dind:18.09.6
   variables:
     EXTRA_TAGS: ""
   before_script:
     - echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USER} --password-stdin
+    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
   script:
-    - docker build --build-arg PHP_VERSION=${PHP_VERSION} --build-arg UNIT_VERSION=${UNIT_VERSION} -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} --network host --no-cache -f Dockerfile .
-    - TAGS="${PHP_VERSION}-${UNIT_VERSION:1:2} ${EXTRA_TAGS}"
-    - for tag in ${TAGS}; do docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} jitesoft/phpunit:${tag}; docker push jitesoft/phpunit:${tag}; done
-  after_script:
-    - docker run --rm ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} phpunit --version
-    - docker run --rm ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} composer -V
-    - docker run --rm ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} php -v
+    - docker build --label="com.jitesoft.app.phpunit.version=${UNIT_VERSION}" --build-arg PHP_VERSION=${PHP_VERSION} --build-arg UNIT_VERSION=${UNIT_VERSION} -t ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} .
+    - |
+      for tag in ${TAGS}; do
+        docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} ${CI_REGISTRY_IMAGE}:${tag}
+        #docker tag ${CI_REGISTRY_IMAGE}:${CI_COMMIT_SHA} jitesoft/phpunit:${tag}
+        docker push ${CI_REGISTRY_IMAGE}:${tag}
+        #docker push jitesoft/phpunit:${tag}
+      done
+
+build:7.3:8:
+  <<: *build-def
+  dependencies:
+    - download:8
+  variables:
+    TAGS: "latest 7.3-8 7.3"
+    PHP_VERSION: "7.3"
+    UNIT_VERSION: "8"
+
+build:7.2:8:
+  <<: *build-def
+  dependencies:
+    - download:8
+  variables:
+    TAGS: "7.2-8"
+    PHP_VERSION: "7.2"
+    UNIT_VERSION: "8"
 
 build:7.3:7:
   <<: *build-def
+  dependencies:
+    - download:8
   variables:
-    EXTRA_TAGS: "latest stable"
+    TAGS: "7.3-7"
     PHP_VERSION: "7.3"
-    UNIT_VERSION: "^7"
+    UNIT_VERSION: "7"
 
 build:7.2:7:
     <<: *build-def
+    dependencies:
+      - download:8
     variables:
+      TAGS: "7.2-7"
       PHP_VERSION: "7.2"
-      UNIT_VERSION: "^7"
+      UNIT_VERSION: "7"
 
-build:7.1:7:
-    <<: *build-def
-    variables:
-      PHP_VERSION: "7.1"
-      UNIT_VERSION: "^7"
+scan:7.3:8:
+  stage: scan
+  extends: .container_scanning
+  variables:
+    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.3-8"
 
-build:7.2:6:
-    <<: *build-def
-    variables:
-      PHP_VERSION: "7.2"
-      UNIT_VERSION: "^6"
+scan:7.3:7:
+  stage: scan
+  extends: .container_scanning
+  variables:
+    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.3-7"
 
-build:7.1:6:
-    <<: *build-def
-    variables:
-      PHP_VERSION: "7.1"
-      UNIT_VERSION: "^6"
 
-build:7.0:6:
-    <<: *build-def
-    variables:
-      PHP_VERSION: "7.0"
-      UNIT_VERSION: "^6"
+scan:7.2:8:
+  stage: scan
+  extends: .container_scanning
+  variables:
+    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.2-8"
+
+scan:7.2:7:
+  stage: scan
+  extends: .container_scanning
+  variables:
+    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.2-7"

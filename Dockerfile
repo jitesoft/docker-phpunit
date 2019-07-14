@@ -1,17 +1,21 @@
 ARG PHP_VERSION='7.3'
-ARG UNIT_VERSION='^7'
-FROM jitesoft/composer:${PHP_VERSION}
-LABEL maintainer="Johannes Tegnér <johannes@jitesoft.com>"
+FROM registry.gitlab.com/jitesoft/dockerfiles/composer/cli:${PHP_VERSION}
+LABEL com.jitesoft.project.repo.type="git" \
+      com.jitesoft.project.repo.uri="https://gitlab.com/jitesoft/dockerfiles/phpunit" \
+      com.jitesoft.project.repo.issues="https://gitlab.com/jitesoft/dockerfiles/phpunit/issues" \
+      com.jitesoft.project.registry.uri="registry.gitlab.com/jitesoft/dockerfiles/phpunit"
 
-ENV PHP_VERSION="${PHP_VERSION}" \
-    UNIT_VERSION="${UNIT_VERSION}"
+COPY ./phpunit.phar /usr/local/bin/phpunit
 
 RUN apk add --no-cache --virtual .build-deps make libc-dev gcc autoconf \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug \
-    && composer global require "phpunit/phpunit ${UNIT_VERSION}" --prefer-source --no-interaction \
-    && apk del .build-deps
+ && pecl install xdebug \
+ && php-ext enable xdebug \
+ && apk del .build-deps \
+ && chmod +x /usr/local/bin/phpunit \
+ && phpunit --version
 
+VOLUME ["/app"]
 WORKDIR /app
 
+ENTRYPOINT ["entrypoint"]
 CMD ["phpunit"]
