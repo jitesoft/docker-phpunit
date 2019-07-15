@@ -1,4 +1,4 @@
-ARG PHP_VERSION='7.3'
+ARG PHP_VERSION
 FROM registry.gitlab.com/jitesoft/dockerfiles/composer-alpine/cli:${PHP_VERSION}
 LABEL com.jitesoft.project.repo.type="git" \
       com.jitesoft.project.repo.uri="https://gitlab.com/jitesoft/dockerfiles/phpunit" \
@@ -12,7 +12,8 @@ RUN apk add --no-cache --virtual .build-deps make libc-dev gcc autoconf \
  && php-ext enable xdebug \
  && apk del .build-deps \
  && chmod +x /usr/local/bin/phpunit \
- && phpunit --version
+ && phpunit --version \
+ && php -v
 
 VOLUME ["/app"]
 WORKDIR /app
