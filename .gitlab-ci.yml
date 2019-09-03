@@ -18,7 +18,7 @@ stages:
     - wget -qO- https://sebastian-bergmann.de/gpg.asc | gpg --import
     - wget https://phar.phpunit.de/phpunit-${VERSION}.phar
     - wget https://phar.phpunit.de/phpunit-${VERSION}.phar.asc
-    - gpg verify phpunit-${VERSION}.phar.asc phpunit-${VERSION}.phar
+    - gpg --verify phpunit-${VERSION}.phar.asc phpunit-${VERSION}.phar
     - mv phpunit-${FULL_VERSION}.phar phpunit.phar
   artifacts:
     paths:
