@@ -46,8 +46,10 @@ download:7:
       for tag in ${TAGS}; do
         docker tag ${CI_REGISTRY_IMAGE}:${PHP_VERSION}-${UNIT_VERSION}-tmp ${CI_REGISTRY_IMAGE}:${tag}
         docker tag ${CI_REGISTRY_IMAGE}:${PHP_VERSION}-${UNIT_VERSION}-tmp jitesoft/phpunit:${tag}
+        docker tag ${CI_REGISTRY_IMAGE}:${PHP_VERSION}-${UNIT_VERSION}-tmp quay.io/jitesoft/phpunit:${tag}
         docker push ${CI_REGISTRY_IMAGE}:${tag}
         docker push jitesoft/phpunit:${tag}
+        docker push quay.io/jitesoft/phpunit:${tag}
       done
 
 build:7.3:8:
