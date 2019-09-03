@@ -1,5 +1,8 @@
 # PHPUnit
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/jitesoft/phpunit.svg)](https://cloud.docker.com/u/jitesoft/repository/docker/jitesoft/phpunit)
+[![Back project](https://img.shields.io/badge/Open%20Collective-Tip%20the%20devs!-blue.svg)](https://opencollective.com/jitesoft-open-source)
+
 Image includes php (cli), [composer](https://getcomposer.org/), [xdebug](https://xdebug.org/) and [phpunit](https://phpunit.de/).  
 It's derived from [`jitesoft/composer:x-cli`](https://gitlab.com/jitesoft/dockerfiles/composer-alpine/blob/master/Dockerfile).
 
@@ -44,3 +47,10 @@ docker run --rm -v $(pwd):/app jitesoft/phpunit --configuration phpunit.xml
 ### Image labels
 
 This image follows the [Jitesoft image label specification 1.0.0](https://gitlab.com/snippets/1866155).
+
+## Licenses
+
+The files in this repository are released under the MIT License.  
+Composer is released under the [MIT](https://github.com/composer/composer/blob/master/LICENSE) license.  
+Read the PHP license [here](https://www.php.net/license/index.php).  
+Read the phpunit license [here](https://github.com/sebastianbergmann/phpunit/blob/master/LICENSE).

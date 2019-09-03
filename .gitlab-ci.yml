@@ -11,14 +11,15 @@ stages:
   image: registry.gitlab.com/jitesoft/dockerfiles/alpine:latest
   variables:
     VERSION: ""
+    GIT_STRATEGY: none
   before_script:
     - apk add --no-cache gnupg
   script:
     - wget -qO- https://sebastian-bergmann.de/gpg.asc | gpg --import
     - wget https://phar.phpunit.de/phpunit-${VERSION}.phar
     - wget https://phar.phpunit.de/phpunit-${VERSION}.phar.asc
-    - gpg phpunit-${VERSION}.phar.asc
-    - mv phpunit-${VERSION}.phar phpunit.phar
+    - gpg verify phpunit-${VERSION}.phar.asc phpunit-${VERSION}.phar
+    - mv phpunit-${FULL_VERSION}.phar phpunit.phar
   artifacts:
     paths:
       - phpunit.phar
@@ -36,14 +37,9 @@ download:7:
 
 .build: &build-def
   stage: deploy
-  image: registry.gitlab.com/jitesoft/dockerfiles/docker:18.09.6
-  services:
-    - registry.gitlab.com/jitesoft/dockerfiles/docker/dind:18.09.6
+  image: registry.gitlab.com/jitesoft/dockerfiles/docker:latest
   variables:
     EXTRA_TAGS: ""
-  before_script:
-    - echo ${DOCKER_HUB_PASSWORD} | docker login -u ${DOCKER_HUB_USER} --password-stdin
-    - echo ${CI_JOB_TOKEN} | docker login -u gitlab-ci-token registry.gitlab.com --password-stdin
   script:
     - docker build --label="com.jitesoft.app.phpunit.version=${UNIT_VERSION}" --build-arg PHP_VERSION=${PHP_VERSION} -t ${CI_REGISTRY_IMAGE}:${PHP_VERSION}-${UNIT_VERSION}-tmp .
     - |
