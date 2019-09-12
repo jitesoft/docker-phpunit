@@ -1,5 +1,5 @@
 include:
-  - https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/container_scan.yml
+  - https://gitlab.com/jitesoft/gitlab-ci-lib/raw/master/container_scan-v2.yml
 
 stages:
   - download
@@ -89,26 +89,22 @@ build:7.2:7:
       UNIT_VERSION: "7"
 
 scan:7.3:8:
-  stage: scan
   extends: .container_scanning
   variables:
     SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.3-8"
 
 scan:7.3:7:
-  stage: scan
   extends: .container_scanning
   variables:
     SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.3-7"
 
 
 scan:7.2:8:
-  stage: scan
   extends: .container_scanning
   variables:
     SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.2-8"
 
 scan:7.2:7:
-  stage: scan
   extends: .container_scanning
   variables:
     SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.2-7"
