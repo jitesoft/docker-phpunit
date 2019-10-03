@@ -6,6 +6,9 @@ stages:
   - deploy
   - scan
 
+variables:
+  PLATFORMS: "linux/amd64,linux/arm64"
+
 .download: &download-def
   stage: download
   image: registry.gitlab.com/jitesoft/dockerfiles/alpine:latest
@@ -23,7 +26,7 @@ stages:
   artifacts:
     paths:
       - phpunit.phar
-    expire_in: 5 days
+    expire_in: 1 hour
 
 download:8:
   <<: *download-def
@@ -37,27 +40,18 @@ download:7:
 
 .build: &build-def
   stage: deploy
-  image: registry.gitlab.com/jitesoft/dockerfiles/docker:latest
-  variables:
-    EXTRA_TAGS: ""
+  image: registry.gitlab.com/jitesoft/dockerfiles/misc:latest
   script:
-    - docker build --label="com.jitesoft.app.phpunit.version=${UNIT_VERSION}" --build-arg PHP_VERSION=${PHP_VERSION} -t ${CI_REGISTRY_IMAGE}:${PHP_VERSION}-${UNIT_VERSION}-tmp .
-    - |
-      for tag in ${TAGS}; do
-        docker tag ${CI_REGISTRY_IMAGE}:${PHP_VERSION}-${UNIT_VERSION}-tmp ${CI_REGISTRY_IMAGE}:${tag}
-        docker tag ${CI_REGISTRY_IMAGE}:${PHP_VERSION}-${UNIT_VERSION}-tmp jitesoft/phpunit:${tag}
-        docker tag ${CI_REGISTRY_IMAGE}:${PHP_VERSION}-${UNIT_VERSION}-tmp quay.io/jitesoft/phpunit:${tag}
-        docker push ${CI_REGISTRY_IMAGE}:${tag}
-        docker push jitesoft/phpunit:${tag}
-        docker push quay.io/jitesoft/phpunit:${tag}
-      done
+    - TAG_LIST=$(helper "jitesoft/phpunit,${CI_REGISTRY_IMAGE}" "${TAGS}")
+    - docker buildx build --platform ${PLATFORMS} --progress plain --push ${TAG_LIST} --build-arg PHP_VERSION=${PHP_VERSION} --build-arg UNIT_VERSION=${UNIT_VERSION} .
+  tags: [ jitesoft, buildx, amd64, arm64 ]
 
 build:7.3:8:
   <<: *build-def
   dependencies:
     - download:8
   variables:
-    TAGS: "latest stable 7.3-8 7.3"
+    TAGS: "latest,stable,7.3-8,7.3"
     PHP_VERSION: "7.3"
     UNIT_VERSION: "8"
 
@@ -66,7 +60,7 @@ build:7.2:8:
   dependencies:
     - download:8
   variables:
-    TAGS: "7.2-8 7.2"
+    TAGS: "7.2-8,7.2"
     PHP_VERSION: "7.2"
     UNIT_VERSION: "8"
 
