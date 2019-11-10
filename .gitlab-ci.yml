@@ -44,7 +44,7 @@ download:7:
   script:
     - TAG_LIST=$(helper "jitesoft/phpunit,${CI_REGISTRY_IMAGE}" "${TAGS}")
     - docker buildx build --platform ${PLATFORMS} --progress plain --push ${TAG_LIST} --build-arg PHP_VERSION=${PHP_VERSION} --build-arg UNIT_VERSION=${UNIT_VERSION} .
-  tags: [ jitesoft, buildx, amd64, arm64 ]
+  tags: [ jitesoft, buildx, protected ]
 
 build:7.3:8:
   <<: *build-def
