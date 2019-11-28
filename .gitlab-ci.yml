@@ -46,41 +46,52 @@ download:7:
     - docker buildx build --platform ${PLATFORMS} --progress plain --push ${TAG_LIST} --build-arg PHP_VERSION=${PHP_VERSION} --build-arg UNIT_VERSION=${UNIT_VERSION} .
   tags: [ jitesoft, buildx, protected ]
 
+build:7.4:8:
+  <<: *build-def
+  dependencies:
+    - download:8
+  variables:
+    TAGS: "latest,stable,7.4-8,7.4"
+    PHP_VERSION: "7.4"
+    UNIT_VERSION: "8"
+
 build:7.3:8:
   <<: *build-def
   dependencies:
     - download:8
   variables:
-    TAGS: "latest,stable,7.3-8,7.3"
+    TAGS: "7.3-8,7.3"
     PHP_VERSION: "7.3"
     UNIT_VERSION: "8"
 
-build:7.2:8:
+build:7.4:7:
   <<: *build-def
   dependencies:
     - download:8
   variables:
-    TAGS: "7.2-8,7.2"
-    PHP_VERSION: "7.2"
-    UNIT_VERSION: "8"
-
-build:7.3:7:
-  <<: *build-def
-  dependencies:
-    - download:8
-  variables:
-    TAGS: "7.3-7"
-    PHP_VERSION: "7.3"
+    TAGS: "7.4-7"
+    PHP_VERSION: "7.4"
     UNIT_VERSION: "7"
 
-build:7.2:7:
+build:7.3:7:
     <<: *build-def
     dependencies:
       - download:8
     variables:
-      TAGS: "7.2-7"
-      PHP_VERSION: "7.2"
+      TAGS: "7.3-7"
+      PHP_VERSION: "7.3"
       UNIT_VERSION: "7"
+
+scan:7.4:8:
+  extends: .container_scanning
+  variables:
+    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.4-8"
+
+scan:7.4:7:
+  extends: .container_scanning
+  variables:
+    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.4-7"
+
 
 scan:7.3:8:
   extends: .container_scanning
@@ -91,14 +102,3 @@ scan:7.3:7:
   extends: .container_scanning
   variables:
     SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.3-7"
-
-
-scan:7.2:8:
-  extends: .container_scanning
-  variables:
-    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.2-8"
-
-scan:7.2:7:
-  extends: .container_scanning
-  variables:
-    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.2-7"
