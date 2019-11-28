@@ -13,13 +13,15 @@ The `latest` and `stable` images are using the latest version of php and phpunit
 
 ### Docker Hub
 
-* `7.3-8`, `stable`, `latest`
-* `7.2-8`
-* `7.3-7`
-* `7.2-7`
+* `7.4-8`, `stable`, `latest`, `7.4`
+* `7.3-8`, `7.3`
 
 ### Unmaintained tags
 
+* `7.3-7`
+* `7.2`
+* `7.2-8` 
+* `7.2-7`
 * `7.1-7`
 * `7.2-6`
 * `7.1-6`
@@ -28,10 +30,8 @@ The `latest` and `stable` images are using the latest version of php and phpunit
 ### Git Lab
 
 * `registry.gitlab.com/jitesoft/dockerfiles/phpunit`
-  * `7.3-8`, `latest`, `stable`, `7.3`
-  * `7.3-7`
-  * `7.2-8`, `7.2`
-  * `7.2-7`
+  * `7.4-8`, `latest`, `stable`, `7.4`
+  * `7.3-8`, `7.3`
 
 
 Dockerfile can be found at [GitLab](https://gitlab.com/jitesoft/dockerfiles/composer-alpine/blob/master/Dockerfile) or [GitHub](https://github.com/jitesoft/docker-phpunit/blob/master/Dockerfile)

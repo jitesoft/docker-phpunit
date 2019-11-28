@@ -33,11 +33,6 @@ download:8:
   variables:
     VERSION: 8
 
-download:7:
-  <<: *download-def
-  variables:
-    VERSION: 7
-
 .build: &build-def
   stage: deploy
   image: registry.gitlab.com/jitesoft/dockerfiles/misc:latest
@@ -64,41 +59,12 @@ build:7.3:8:
     PHP_VERSION: "7.3"
     UNIT_VERSION: "8"
 
-build:7.4:7:
-  <<: *build-def
-  dependencies:
-    - download:8
-  variables:
-    TAGS: "7.4-7"
-    PHP_VERSION: "7.4"
-    UNIT_VERSION: "7"
-
-build:7.3:7:
-    <<: *build-def
-    dependencies:
-      - download:8
-    variables:
-      TAGS: "7.3-7"
-      PHP_VERSION: "7.3"
-      UNIT_VERSION: "7"
-
 scan:7.4:8:
   extends: .container_scanning
   variables:
     SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.4-8"
 
-scan:7.4:7:
-  extends: .container_scanning
-  variables:
-    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.4-7"
-
-
 scan:7.3:8:
   extends: .container_scanning
   variables:
     SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.3-8"
-
-scan:7.3:7:
-  extends: .container_scanning
-  variables:
-    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.3-7"
