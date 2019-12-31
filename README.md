@@ -4,7 +4,7 @@
 [![Back project](https://img.shields.io/badge/Open%20Collective-Tip%20the%20devs!-blue.svg)](https://opencollective.com/jitesoft-open-source)
 
 Image includes php (cli), [composer](https://getcomposer.org/), [xdebug](https://xdebug.org/) and [phpunit](https://phpunit.de/).  
-It's derived from [`jitesoft/composer:x-cli`](https://gitlab.com/jitesoft/dockerfiles/composer-alpine/blob/master/Dockerfile).
+It's derived from [`jitesoft/composer`](https://gitlab.com/jitesoft/dockerfiles/composer-alpine/blob/master/Dockerfile).
 
 ## Tags
 
@@ -16,23 +16,11 @@ The `latest` and `stable` images are using the latest version of php and phpunit
 * `7.4-8`, `stable`, `latest`, `7.4`
 * `7.3-8`, `7.3`
 
-### Unmaintained tags
-
-* `7.3-7`
-* `7.2`
-* `7.2-8` 
-* `7.2-7`
-* `7.1-7`
-* `7.2-6`
-* `7.1-6`
-* `7.0-6`
-
 ### Git Lab
 
 * `registry.gitlab.com/jitesoft/dockerfiles/phpunit`
   * `7.4-8`, `latest`, `stable`, `7.4`
   * `7.3-8`, `7.3`
-
 
 Dockerfile can be found at [GitLab](https://gitlab.com/jitesoft/dockerfiles/composer-alpine/blob/master/Dockerfile) or [GitHub](https://github.com/jitesoft/docker-phpunit/blob/master/Dockerfile)
 

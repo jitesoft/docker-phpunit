@@ -1,5 +1,5 @@
 ARG PHP_VERSION
-FROM registry.gitlab.com/jitesoft/dockerfiles/composer-alpine/cli:${PHP_VERSION}
+FROM registry.gitlab.com/jitesoft/dockerfiles/composer-alpine:${PHP_VERSION}
 ARG UNIT_VERSION
 LABEL com.jitesoft.project.repo.type="git" \
       com.jitesoft.project.repo.uri="https://gitlab.com/jitesoft/dockerfiles/phpunit" \
