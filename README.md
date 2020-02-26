@@ -8,7 +8,7 @@ It's derived from [`jitesoft/composer`](https://gitlab.com/jitesoft/dockerfiles/
 
 ## Tags
 
-Each version has a base tag of <php-version>-<php-unit-version> where php version is major and minor version (I.E., 7.3, 7.2 etc) and phpunit is the major version (I.E., 8, 7 etc).  
+Each version has a base tag of `php_version-phpunit_version` where php version is major and minor version (I.E., 7.3, 7.2 etc) and phpunit is the major version (I.E., 8, 7 etc).  
 The `latest` and `stable` images are using the latest version of php and phpunit, all includes composer and xdebug.
 
 ### Docker Hub

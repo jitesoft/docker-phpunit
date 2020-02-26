@@ -41,12 +41,21 @@ download:8:
     - docker buildx build --platform ${PLATFORMS} --progress plain --push ${TAG_LIST} --build-arg PHP_VERSION=${PHP_VERSION} --build-arg UNIT_VERSION=${UNIT_VERSION} .
   tags: [ jitesoft, buildx, protected ]
 
+build:7.4:9:
+  <<: *build-def
+  dependencies:
+    - download:8
+  variables:
+    TAGS: "latest,stable,7.4-9,7.4"
+    PHP_VERSION: "7.4"
+    UNIT_VERSION: "9"
+
 build:7.4:8:
   <<: *build-def
   dependencies:
     - download:8
   variables:
-    TAGS: "latest,stable,7.4-8,7.4"
+    TAGS: "7.4-8"
     PHP_VERSION: "7.4"
     UNIT_VERSION: "8"
 
