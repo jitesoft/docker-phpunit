@@ -46,6 +46,15 @@ download:9:
     - docker buildx build --platform ${PLATFORMS} --progress plain --push ${TAG_LIST} --build-arg PHP_VERSION=${PHP_VERSION} --build-arg UNIT_VERSION=${UNIT_VERSION} .
   tags: [ jitesoft, buildx, protected ]
 
+build:8.0:9:
+  <<: *build-def
+  needs:
+    - download:9
+  variables:
+    TAGS: "rc,unstable,rc-9,8.0-9,8.0"
+    PHP_VERSION: "8.0"
+    UNIT_VERSION: "9"
+
 build:7.4:9:
   <<: *build-def
   needs:
@@ -77,6 +86,11 @@ scan:7.4:8:
   extends: .container_scanning
   variables:
     SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.4-8"
+
+scan:7.4:9:
+  extends: .container_scanning
+  variables:
+    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.4-9"
 
 scan:7.3:8:
   extends: .container_scanning
