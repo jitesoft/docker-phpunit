@@ -8,19 +8,31 @@ It's derived from [`jitesoft/composer`](https://gitlab.com/jitesoft/dockerfiles/
 
 ## Tags
 
-Each version has a base tag of `php_version-phpunit_version` where php version is major and minor version (I.E., 7.3, 7.2 etc) and phpunit is the major version (I.E., 8, 7 etc).  
+Each version has a base tag of `php_version-phpunit_version` where php version is major and minor version (I.E., 7.3, 7.2 etc) and phpunit is the major version (I.E., 9, 8 etc).  
 The `latest` and `stable` images are using the latest version of php and phpunit, all includes composer and xdebug.
+
+Each tag is built for amd64 and arm64.
 
 ### Docker Hub
 
-* `7.4-8`, `stable`, `latest`, `7.4`
-* `7.3-8`, `7.3`
+* `jitesoft/phpunit`
+    * `7.4-9`, `stable`, `latest`, `7.4`
+    * `7.4-8`
+    * `7.3-8`, `7.3`
 
-### Git Lab
+### GitLab
 
 * `registry.gitlab.com/jitesoft/dockerfiles/phpunit`
-  * `7.4-8`, `latest`, `stable`, `7.4`
-  * `7.3-8`, `7.3`
+    * `7.4-9`, `stable`, `latest`, `7.4`
+    * `7.4-8`
+    * `7.3-8`, `7.3`
+
+### GitHub
+
+* `ghcr.io/jitesoft/phpunit`
+    * `7.4-9`, `stable`, `latest`, `7.4`
+    * `7.4-8`
+    * `7.3-8`, `7.3`
 
 Dockerfile can be found at [GitLab](https://gitlab.com/jitesoft/dockerfiles/composer-alpine/blob/master/Dockerfile) or [GitHub](https://github.com/jitesoft/docker-phpunit/blob/master/Dockerfile)
 

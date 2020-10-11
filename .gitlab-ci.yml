@@ -3,96 +3,52 @@ include:
 
 stages:
   - download
-  - deploy
+  - containerize
   - scan
 
 variables:
   PLATFORMS: "linux/amd64,linux/arm64"
 
-.download: &download-def
+download:
+  parallel:
+    matrix:
+      - { VERSION: "8", GIT_STRATEGY: "none" }
+      - { VERSION: "9", GIT_STRATEGY: "none" }
   stage: download
-  image: registry.gitlab.com/jitesoft/dockerfiles/alpine:latest
+  image: registry.gitlab.com/jitesoft/dockerfiles/misc:latest
   variables:
     VERSION: ""
     GIT_STRATEGY: none
-  before_script:
-    - apk add --no-cache gnupg
   script:
     - wget -qO- https://sebastian-bergmann.de/gpg.asc | gpg --import
     - wget https://phar.phpunit.de/phpunit-${VERSION}.phar
     - wget https://phar.phpunit.de/phpunit-${VERSION}.phar.asc
     - gpg --verify phpunit-${VERSION}.phar.asc phpunit-${VERSION}.phar
-    - mv phpunit-${VERSION}.phar phpunit.phar
+    - mkdir bin
+    - mv phpunit-${VERSION}.phar bin/
   artifacts:
     paths:
-      - phpunit.phar
+      - bin/
     expire_in: 1 hour
 
-download:8:
-  <<: *download-def
-  variables:
-    VERSION: 8
-
-download:9:
-  <<: *download-def
-  variables:
-    VERSION: 9
-
-.build: &build-def
-  stage: deploy
+containerize:
+  parallel:
+    matrix:
+      #- { PHP_VERSION: "8.0", TAGS: "rc,unstable,rc-9,8.0-9,8.0", UNIT_VERSION: "9" }
+      - { PHP_VERSION: "7.4", TAGS: "latest,stable,7.4-9,7.4", UNIT_VERSION: "9" }
+      - { PHP_VERSION: "7.4", TAGS: "7.4-8", UNIT_VERSION: "8" }
+      - { PHP_VERSION: "7.3", TAGS: "7.3-8,7.3", UNIT_VERSION: "8" }
+  stage: containerize
   image: registry.gitlab.com/jitesoft/dockerfiles/misc:latest
   script:
     - TAG_LIST=$(helper "jitesoft/phpunit,${CI_REGISTRY_IMAGE}" "${TAGS}")
     - docker buildx build --platform ${PLATFORMS} --progress plain --push ${TAG_LIST} --build-arg PHP_VERSION=${PHP_VERSION} --build-arg UNIT_VERSION=${UNIT_VERSION} .
   tags: [ jitesoft, buildx, protected ]
 
-build:8.0:9:
-  <<: *build-def
-  needs:
-    - download:9
-  variables:
-    TAGS: "rc,unstable,rc-9,8.0-9,8.0"
-    PHP_VERSION: "8.0"
-    UNIT_VERSION: "9"
-
-build:7.4:9:
-  <<: *build-def
-  needs:
-    - download:9
-  variables:
-    TAGS: "latest,stable,7.4-9,7.4"
-    PHP_VERSION: "7.4"
-    UNIT_VERSION: "9"
-
-build:7.4:8:
-  <<: *build-def
-  needs:
-    - download:8
-  variables:
-    TAGS: "7.4-8"
-    PHP_VERSION: "7.4"
-    UNIT_VERSION: "8"
-
-build:7.3:8:
-  <<: *build-def
-  needs:
-    - download:8
-  variables:
-    TAGS: "7.3-8,7.3"
-    PHP_VERSION: "7.3"
-    UNIT_VERSION: "8"
-
-scan:7.4:8:
+scan:
   extends: .container_scanning
-  variables:
-    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.4-8"
-
-scan:7.4:9:
-  extends: .container_scanning
-  variables:
-    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.4-9"
-
-scan:7.3:8:
-  extends: .container_scanning
-  variables:
-    SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.3-8"
+  parallel:
+    matrix:
+      - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.4-8", GIT_STRATEGY: "none" }
+      - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.4-9", GIT_STRATEGY: "none" }
+      - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:7.3-8", GIT_STRATEGY: "none" }
