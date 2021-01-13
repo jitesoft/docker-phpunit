@@ -10,12 +10,14 @@ LABEL com.jitesoft.project.repo.type="git" \
 
 ARG UNIT_VERSION
 ARG PHP_VERSION
+ENV XDEBUG_MODE="coverage"
 
 RUN --mount=type=bind,source=./bin,target=/tmp/bin \
     cp /tmp/bin/phpunit-${UNIT_VERSION}.phar /usr/local/bin/phpunit \
  && apk add --no-cache --virtual .build-deps make libc-dev gcc autoconf \
  && pecl install xdebug \
  && php-ext enable xdebug \
+ && echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini  \
  && apk del .build-deps \
  && chmod +x /usr/local/bin/phpunit \
  && phpunit --version \
