@@ -14,7 +14,7 @@ ENV XDEBUG_MODE="coverage"
 
 RUN --mount=type=bind,source=./bin,target=/tmp/bin \
     cp /tmp/bin/phpunit-${UNIT_VERSION}.phar /usr/local/bin/phpunit \
- && apk add --no-cache --virtual .build-deps make libc-dev gcc autoconf \
+ && apk add --no-cache --virtual .build-deps make linux-headers libc-dev gcc autoconf \
  && pecl install xdebug \
  && php-ext enable xdebug \
  && echo "xdebug.mode=coverage" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini  \
