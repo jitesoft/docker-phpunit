@@ -16,29 +16,14 @@ Each tag is built for amd64 and arm64.
 ### Docker Hub
 
 * `jitesoft/phpunit`
-    * `8-9`, `8.1-9`, `stable`, `latest`, `8.1`
-    * `8.0-9`, `8.0`
-    * `7.4-9`, `7.4`
-    * `7.4-8`
-    * `7.3-8`, `7.3`
 
 ### GitLab
 
 * `registry.gitlab.com/jitesoft/dockerfiles/phpunit`
-    * `8-9`, `8.1-9`, `stable`, `latest`, `8.1`
-    * `8.0-9`, `8.0`
-    * `7.4-9`, `7.4`
-    * `7.4-8`
-    * `7.3-8`, `7.3`
 
 ### GitHub
 
 * `ghcr.io/jitesoft/phpunit`
-    * `8-9`, `8.1-9`, `stable`, `latest`, `8.1`
-    * `8.0-9`, `8.0`
-    * `7.4-9`, `7.4`
-    * `7.4-8`
-    * `7.3-8`, `7.3`
 
 Dockerfile can be found at [GitLab](https://gitlab.com/jitesoft/dockerfiles/composer-alpine/blob/master/Dockerfile) or [GitHub](https://github.com/jitesoft/docker-phpunit/blob/master/Dockerfile)
 
