@@ -40,7 +40,7 @@ containerize:
   stage: containerize
   image: registry.gitlab.com/jitesoft/dockerfiles/misc:latest
   script:
-    - TAG_LIST=$(helper "ghcr.io/jitesoft/phpunit,jitesoft/phpunit,${CI_REGISTRY_IMAGE}" "${TAGS}")
+    - TAG_LIST=$(helper "ghcr.io/jitesoft/phpunit,jitesoft/phpunit,${CI_REGISTRY_IMAGE},quay.io/jitesoft/phpunit" "${TAGS}")
     - docker buildx build --platform ${PLATFORMS} --progress plain --push ${TAG_LIST} --build-arg PHP_VERSION=${PHP_VERSION} --build-arg UNIT_VERSION=${UNIT_VERSION} .
   tags: [ jitesoft, buildx, protected ]
 
