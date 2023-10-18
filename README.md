@@ -34,6 +34,25 @@ Enter directory in which you intend to run phpunit from. Run the desired command
 ```bash
 docker run --rm -v $(pwd):/app jitesoft/phpunit --configuration phpunit.xml
 ```
+### Debugging
+To get Xdebug to turn on its debugger you will need to set the environmental variable XDEBUG_MODE.
+
+```bash
+docker run --rm -e XDEBUG_MODE=debug -v $(pwd):/app jitesoft/phpunit --configuration phpunit.xml
+```
+Or in docker compose:
+
+```yml
+phpunit:
+    container_name: phpunit
+    image: jitesoft/phpunit:8.2
+    environment:
+      - "XDEBUG_MODE=debug"
+    volumes:
+      - "./php:/app/"
+      - "./conf/phpunit/docker-php-ext-xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
+      - "./conf/phpunit/xdebug.log:/var/log/xdebug.log"
+```
 
 ### Image labels
 
