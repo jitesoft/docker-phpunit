@@ -49,7 +49,8 @@ download:
 containerize:
   parallel:
     matrix:
-      - { PHP_VERSION: "8.2", TAGS: "latest,stable,8.2-10,8.2", UNIT_VERSION: "10" }
+      - { PHP_VERSION: "8.3", TAGS: "latest,stable,8.3-10,8.3", UNIT_VERSION: "10" }
+      - { PHP_VERSION: "8.2", TAGS: "8.2-10,8.2", UNIT_VERSION: "10" }
       - { PHP_VERSION: "8.2", TAGS: "8.2-9", UNIT_VERSION: "9" }
       - { PHP_VERSION: "8.1", TAGS: "8.1-9,8.1", UNIT_VERSION: "9" }
       - { PHP_VERSION: "8.0", TAGS: "8.0-9,8.0", UNIT_VERSION: "9" }
@@ -64,6 +65,7 @@ scan:
   extends: .container_scanning
   parallel:
     matrix:
+      - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:8.3-10", GIT_STRATEGY: "none" }
       - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:8.2-10", GIT_STRATEGY: "none" }
       - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:8.2-9", GIT_STRATEGY: "none" }
       - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:8.1-9", GIT_STRATEGY: "none" }
