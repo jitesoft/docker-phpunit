@@ -6,7 +6,17 @@ LABEL com.jitesoft.project.repo.type="git" \
       com.jitesoft.project.repo.uri="https://gitlab.com/jitesoft/dockerfiles/phpunit" \
       com.jitesoft.project.repo.issues="https://gitlab.com/jitesoft/dockerfiles/phpunit/issues" \
       com.jitesoft.project.registry.uri="registry.gitlab.com/jitesoft/dockerfiles/phpunit" \
-      com.jitesoft.app.phpunit.version="${UNIT_VERSION}"
+      com.jitesoft.app.phpunit.version="${UNIT_VERSION}"\
+      # Open container labels
+      org.opencontainers.image.version="${UNIT_VERSION}" \
+      org.opencontainers.image.created="${BUILD_TIME}" \
+      org.opencontainers.image.description="PHP, Composer and Phpunit on alpine linux" \
+      org.opencontainers.image.vendor="Jitesoft" \
+      org.opencontainers.image.source="https://gitlab.com/jitesoft/dockerfiles/phpunit" \
+      # Artifact hub annotations
+      io.artifacthub.package.alternative-locations="oci://registry.gitlab.com/jitesoft/dockerfiles/phpunit,oci://index.docker.io/jitesoft/phpunit,oci://ghcr.io/jitesoft/phpunit,oci://quay.io/jitesoft/phpunit" \
+      io.artifacthub.package.readme-url="https://gitlab.com/jitesoft/dockerfiles/phpunit/-/raw/master/README.md" \
+      io.artifacthub.package.logo-url="https://jitesoft.com/favicon-96x96.png"
 
 ARG UNIT_VERSION
 ARG PHP_VERSION
