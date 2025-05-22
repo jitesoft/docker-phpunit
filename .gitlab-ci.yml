@@ -30,6 +30,7 @@ download:
       - { VERSION: "9", GIT_STRATEGY: "none" }
       - { VERSION: "10", GIT_STRATEGY: "none" }
       - { VERSION: "11", GIT_STRATEGY: "none" }
+      - { VERSION: "12", GIT_STRATEGY: "none" }
   stage: download
   image: registry.gitlab.com/jitesoft/dockerfiles/misc:latest
   variables:
@@ -50,8 +51,10 @@ download:
 containerize:
   parallel:
     matrix:
-      - { PHP_VERSION: "8.4", TAGS: "latest,stable,8.4-11,8.4", UNIT_VERSION: "11" }
-      - { PHP_VERSION: "8.3", TAGS: "8.3-11,8.3", UNIT_VERSION: "11" }
+      - { PHP_VERSION: "8.4", TAGS: "latest,stable,8.4-12,8.4", UNIT_VERSION: "12" }
+      - { PHP_VERSION: "8.4", TAGS: "8.4-11", UNIT_VERSION: "11" }
+      - { PHP_VERSION: "8.3", TAGS: "8.3-12,8.3", UNIT_VERSION: "12" }
+      - { PHP_VERSION: "8.3", TAGS: "8.3-11", UNIT_VERSION: "11" }
       - { PHP_VERSION: "8.4", TAGS: "8.4-10", UNIT_VERSION: "10" }
       - { PHP_VERSION: "8.3", TAGS: "8.3-10", UNIT_VERSION: "10" }
       - { PHP_VERSION: "8.2", TAGS: "8.2-10,8.2", UNIT_VERSION: "10" }
@@ -68,8 +71,10 @@ scan:
   extends: .container_scanning
   parallel:
     matrix:
+      - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:8.4-12", GIT_STRATEGY: "none" }
       - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:8.4-11", GIT_STRATEGY: "none" }
       - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:8.4-10", GIT_STRATEGY: "none" }
+      - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:8.3-12", GIT_STRATEGY: "none" }
       - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:8.3-11", GIT_STRATEGY: "none" }
       - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:8.3-10", GIT_STRATEGY: "none" }
       - { SCANNING_IMAGE_NAME: "${CI_REGISTRY_IMAGE}:8.2-10", GIT_STRATEGY: "none" }
