@@ -51,7 +51,8 @@ download:
 containerize:
   parallel:
     matrix:
-      - { PHP_VERSION: "8.4", TAGS: "latest,stable,8.4-12,8.4", UNIT_VERSION: "12" }
+      - { PHP_VERSION: "8.5", TAGS: "latest,stable,8.5-12,8.5", UNIT_VERSION: "12" }
+      - { PHP_VERSION: "8.4", TAGS: "8.4-12,8.4", UNIT_VERSION: "12" }
       - { PHP_VERSION: "8.4", TAGS: "8.4-11", UNIT_VERSION: "11" }
       - { PHP_VERSION: "8.3", TAGS: "8.3-12,8.3", UNIT_VERSION: "12" }
       - { PHP_VERSION: "8.3", TAGS: "8.3-11", UNIT_VERSION: "11" }
